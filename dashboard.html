@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Portfolio</title>
+  <link rel="stylesheet" href="dashboard-style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Portfolio</h2>
+        <button id="logoutBtn" class="btn-logout">Logout</button>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="#" class="nav-link active" data-section="overview">Overview</a></li>
+          <li><a href="#" class="nav-link" data-section="jobs">Job Applications</a></li>
+          <li><a href="#" class="nav-link" data-section="cv-builder">CV Builder</a></li>
+          <li><a href="#" class="nav-link" data-section="profile">Profile Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="user-info">
+          <p id="userName">Welcome, User!</p>
+          <small id="userEmail">user@email.com</small>
+        </div>
+      </header>
+
+      <!-- Overview Section -->
+      <section id="overview" class="section-content active">
+        <h1>Dashboard Overview</h1>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Applied Jobs</h3>
+            <p class="stat-number" id="appliedCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Interested Jobs</h3>
+            <p class="stat-number" id="interestedCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>CV Versions</h3>
+            <p class="stat-number" id="cvCount">0</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Job Applications Section -->
+      <section id="jobs" class="section-content">
+        <h1>Job Applications Tracker</h1>
+        
+        <div class="jobs-controls">
+          <button id="addJobBtn" class="btn-primary">+ Add Job</button>
+          <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="applied">Applied</button>
+            <button class="filter-btn" data-filter="interested">Interested</button>
+          </div>
+        </div>
+
+        <!-- Add Job Modal -->
+        <div id="jobModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Job Application</h2>
+            <form id="jobForm">
+              <div class="form-group">
+                <label for="jobTitle">Job Title</label>
+                <input type="text" id="jobTitle" name="jobTitle" required>
+              </div>
+
+              <div class="form-group">
+                <label for="company">Company Name</label>
+                <input type="text" id="company" name="company" required>
+              </div>
+
+              <div class="form-group">
+                <label for="jobLocation">Location</label>
+                <input type="text" id="jobLocation" name="jobLocation">
+              </div>
+
+              <div class="form-group">
+                <label for="jobStatus">Status</label>
+                <select id="jobStatus" name="jobStatus" required>
+                  <option value="applied">Applied</option>
+                  <option value="interested">Interested</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="applicationDate">Application Date</label>
+                <input type="date" id="applicationDate" name="applicationDate">
+              </div>
+
+              <div class="form-group">
+                <label for="jobDescription">Job Description</label>
+                <textarea id="jobDescription" name="jobDescription" rows="4"></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary">Save Job</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Jobs List -->
+        <div id="jobsList" class="jobs-list">
+          <p class="no-data">No jobs added yet. Click "Add Job" to get started.</p>
+        </div>
+      </section>
+
+      <!-- CV Builder Section -->
+      <section id="cv-builder" class="section-content">
+        <h1>CV Builder</h1>
+        
+        <div class="cv-builder-container">
+          <!-- CV Form -->
+          <div class="cv-form">
+            <h2>Build Your CV</h2>
+            <form id="cvForm">
+              <!-- Personal Information -->
+              <fieldset>
+                <legend>Personal Information</legend>
+                <div class="form-group">
+                  <label for="cvFullName">Full Name</label>
+                  <input type="text" id="cvFullName" name="cvFullName" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="cvEmail">Email</label>
+                  <input type="email" id="cvEmail" name="cvEmail" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="cvPhone">Phone Number</label>
+                  <input type="tel" id="cvPhone" name="cvPhone">
+                </div>
+
+                <div class="form-group">
+                  <label for="cvLocation">Location</label>
+                  <input type="text" id="cvLocation" name="cvLocation">
+                </div>
+              </fieldset>
+
+              <!-- Professional Summary -->
+              <fieldset>
+                <legend>Professional Summary</legend>
+                <div class="form-group">
+                  <label for="cvSummary">Summary</label>
+                  <textarea id="cvSummary" name="cvSummary" rows="4" placeholder="Brief summary of your professional background"></textarea>
+                </div>
+              </fieldset>
+
+              <!-- Experience -->
+              <fieldset>
+                <legend>Work Experience</legend>
+                <div id="experienceContainer"></div>
+                <button type="button" id="addExperienceBtn" class="btn-secondary">+ Add Experience</button>
+              </fieldset>
+
+              <!-- Education -->
+              <fieldset>
+                <legend>Education</legend>
+                <div id="educationContainer"></div>
+                <button type="button" id="addEducationBtn" class="btn-secondary">+ Add Education</button>
+              </fieldset>
+
+              <!-- Skills -->
+              <fieldset>
+                <legend>Skills</legend>
+                <div id="skillsContainer"></div>
+                <button type="button" id="addSkillBtn" class="btn-secondary">+ Add Skill</button>
+              </fieldset>
+
+              <div class="cv-actions">
+                <button type="submit" class="btn-primary">Save CV</button>
+                <button type="button" id="previewCvBtn" class="btn-secondary">Preview CV</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- CV Preview -->
+          <div class="cv-preview">
+            <h2>CV Preview</h2>
+            <div id="cvPreviewContent" class="preview-content">
+              <p>Fill in the form to see your CV preview</p>
+            </div>
+            <button id="downloadCvBtn" class="btn-primary">Download PDF</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Settings Section -->
+      <section id="profile" class="section-content">
+        <h1>Profile Settings</h1>
+        
+        <form id="profileForm">
+          <fieldset>
+            <legend>Account Information</legend>
+            <div class="form-group">
+              <label for="profileFullName">Full Name</label>
+              <input type="text" id="profileFullName" name="profileFullName" required>
+            </div>
+
+            <div class="form-group">
+              <label for="profileEmail">Email</label>
+              <input type="email" id="profileEmail" name="profileEmail" required disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="profileBio">Bio</label>
+              <textarea id="profileBio" name="profileBio" rows="4"></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Change Password</legend>
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input type="password" id="currentPassword" name="currentPassword">
+            </div>
+
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input type="password" id="newPassword" name="newPassword">
+            </div>
+
+            <div class="form-group">
+              <label for="confirmNewPassword">Confirm New Password</label>
+              <input type="password" id="confirmNewPassword" name="confirmNewPassword">
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <p id="successMessage"></p>
+      <button class="btn-primary" onclick="closeSuccessModal()">Close</button>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
